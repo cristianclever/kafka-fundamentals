@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-
   broker:
     image: confluentinc/cp-kafka:8.2.0
     hostname: broker
@@ -59,3 +58,20 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+      
+  redis:
+      image: redis:7-alpine
+      container_name: bank_redis
+      ports:
+        - "6379:6379"
+      volumes:
+        - redis_data:/data
+      healthcheck:
+        test: ["CMD", "redis-cli", "ping"]
+        interval: 5s
+        timeout: 5s
+        retries: 5 
+        
+        
+volumes:
+  redis_data:        
